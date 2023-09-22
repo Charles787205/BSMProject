@@ -96,32 +96,3 @@ def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int, title, 
     window.clear()
     return user_input
 
-
-
-def draw_hor_line(window, length:int, x:int,y:int ):
-    """Print horizontal line that start from x"""
-    string_line = "";
-    for i in range(length):
-        if i == 0 or i == (length-1):
-            string_line += '|'
-        else:
-            string_line += "-"
-
-    window.addstr(y,x, string_line)
-
-def draw_table(window, headers:List[str], values:List[List[str]]):
-    pass
-
-
-def get_table_row_string(window, values:list[str], column_width:list[int]):
-    row_length = 0
-    string_row = ''
-    for i in column_width:
-        row_length += i
-    for ind, i in enumerate(values):
-        string_row +=  "| {:<{width}} ".format(i, width=column_width[ind]-2)
-    string_row += '|'
-    return string_row
-    
-    
-
