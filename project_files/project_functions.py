@@ -35,13 +35,19 @@ def get_the_center_screen(window) :
     return center_screen_y, center_screen_x
 
 
-def display_string(window,y,x, string_arr, color=None):
+def display_string(window,y,x, string_arr, color=None, colored_row=[], colored_row_color=None):
     for index, line in enumerate(string_arr):
        
-        if color is not None:
-            window.addstr(y+index, x, line, color)
+        if index in colored_row:
+            window.addstr(y+index, x, line, colored_row_color)
         else:
-            window.addstr(y+index, x, line )
+            if color is not None:
+                window.addstr(y+index, x, line, color)
+            else:
+                window.addstr(y+index, x, line )
+        
+
+
 
 def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int,title, color=None) -> str:
     """Get the string from user input"""
@@ -80,7 +86,7 @@ def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int,title, c
     window.clear()
     return user_input
 
-def display_string_center_screen(window, y, string_arr, color=None):
+def display_string_center_screen(window, y, string_arr, color=None, colored_row=[], colored_row_color=None):
     length = 0
     for i in string_arr:
         if len(i) > length:
@@ -88,5 +94,5 @@ def display_string_center_screen(window, y, string_arr, color=None):
 
     center_y, centerx = get_the_center_screen(window)
     string_x = centerx - int(length /2)
-    display_string(window, y, string_x, string_arr, color=color)
+    display_string(window, y, string_x, string_arr, color=color,colored_row=colored_row, colored_row_color=colored_row_color)
 

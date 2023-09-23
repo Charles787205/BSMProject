@@ -9,6 +9,7 @@ from moss import Moss
 import gaussian_functions
 from gemps import Gemps
 from half_interval import HalfInterval
+from trapezoidal import Trapezoidal
 title = "BSM Project"
 
 def main():
@@ -28,7 +29,8 @@ def start_curses(window):
     curses.init_pair(1, curses.COLOR_GREEN,curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLACK)
-    curses.init_pair(4, 185, curses.COLOR_BLACK)
+    curses.init_pair(4, 227, curses.COLOR_BLACK)
+    curses.init_pair(5, 91, 220) #https://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses the numbers are colors
     print(display_title(window, title,font='big'))
     user_input = eval(get_problem_type(window))
     if user_input < 4: #all gauss methods need matrix
@@ -46,6 +48,8 @@ def start_curses(window):
         Moss(window)
     elif user_input == 5:
         HalfInterval(window)
+    elif user_input == 6:
+        Trapezoidal(window)
 
 
 def get_problem_type(window): #gauss ba gauss jordan etc
@@ -56,6 +60,7 @@ def get_problem_type(window): #gauss ba gauss jordan etc
     [3]. GEMPS
     [4]. Moss
     [5]. Half-Interval Method
+    [6]. Trapezoidal
     """
     center_screen_y, center_screen_x = get_the_center_screen(window)
     prompt_array = prompt.splitlines()

@@ -31,7 +31,7 @@ Use 'x' as the variable
         y,x = get_the_center_screen(self.window)
         
         user_input_equation = get_string_from_user(self.window, x, y+3, self.title)
-        user_input_equation  = user_input_equation.replace('^', "**")
+        user_input_equation  = user_input_equation.replace('^', "**") 
         
         prompt = "Enter the initial value of x"
         self.window.clear()
