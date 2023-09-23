@@ -12,7 +12,7 @@ class HalfInterval():
         self.cyan = curses.color_pair(3)
         self.yellow = curses.color_pair(4)
         self.header_color = curses.color_pair(5)
-        self.title = 'Half-Interval'
+        self.title = 'Half-Interval '
         self.solve_half_interval()
 
     def get_required_values(self):
