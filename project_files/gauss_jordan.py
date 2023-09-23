@@ -12,7 +12,7 @@ class GaussJordan():
         self.green = curses.color_pair(1)
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
-        self.matrix_width = draw_matrix(window, matrix, 0,0, process=["Test Process"], colored_row={1:curses.color_pair(1)})
+        
         window.getch()
         self.title = "Gauss Jordan"
         window.clear()
@@ -122,7 +122,7 @@ class GaussJordan():
                     self.window.getch()
         final_answer =''
         for index, row in enumerate(self.matrix):
-            final_answer += f"xsub{index+1} = {row[len(row)-1]}\n"
+            final_answer += f"xsub{index+1} = {str('%.4f' % row[len(row)-1]).rstrip('0').rstrip('.')}\n"
         y,x = get_the_center_screen(self.window)
         display_string(self.window,y ,x-7 , final_answer.splitlines(), color=self.cyan)
         self.window.getch()

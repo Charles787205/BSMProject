@@ -12,7 +12,6 @@ class Gemps():
         self.green = curses.color_pair(1)
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
-        self.matrix_width = draw_matrix(window, matrix, 0,0, process=["Test Process"], colored_row={1:curses.color_pair(1)})
         window.getch()
         self.title = "GEMPS"
         window.clear()
@@ -140,7 +139,7 @@ class Gemps():
 
 
         for key in final_answer_values:
-            final_answer += f'xsub{key+1} = {final_answer_values[key]}\n'
+            final_answer +=  f'xsub{key+1} = {str(".4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
 
         return final_answer
 
