@@ -68,7 +68,7 @@ class Romberg():
 
     def get_required_values(self):
         self.window.clear()
-        self.title_length = display_title(self.window, self.title,color=self.pink)
+        self.title_length = display_title(self.window, self.title, color=self.pink)
         centery,centerx = get_the_center_screen(self.window)
 
         prompt = """Enter the function below
