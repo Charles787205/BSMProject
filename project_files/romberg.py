@@ -32,6 +32,7 @@ class Romberg():
         self.get_required_values()
         self.trapezoidal_table = solve_trapezoidal(self.a, self.b, self.function)
         table = self.solve_romberg()
+        self.display_romberg(table) 
         
     def display_romberg(self,table):
         self.window.clear()
@@ -67,7 +68,7 @@ class Romberg():
 
     def get_required_values(self):
         self.window.clear()
-        self.title_length = display_title(self.window, self.title)
+        self.title_length = display_title(self.window, self.title,color=self.pink)
         centery,centerx = get_the_center_screen(self.window)
 
         prompt = """Enter the function below
@@ -86,4 +87,8 @@ class Romberg():
         display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
         self.a = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
     
+
+    def clear_display_title(self):
+        self.window.clear()
+        display_title(self.window, self.title, color=self.pink)
 

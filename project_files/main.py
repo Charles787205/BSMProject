@@ -10,6 +10,7 @@ import gaussian_functions
 from gemps import Gemps
 from half_interval import HalfInterval
 from trapezoidal import Trapezoidal
+from romberg import Romberg
 title = "BSM Project"
 
 def main():
@@ -50,7 +51,9 @@ def start_curses(window):
         HalfInterval(window)
     elif user_input == 6:
         Trapezoidal(window)
-
+    elif user_input == 7:
+        romberg = Romberg(window)
+        romberg.solve_romberg_from_romberg()
 
 def get_problem_type(window): #gauss ba gauss jordan etc
     """Returns the chr value of the user input"""
@@ -61,6 +64,7 @@ def get_problem_type(window): #gauss ba gauss jordan etc
     [4]. Moss
     [5]. Half-Interval Method
     [6]. Trapezoidal
+    [7]. Romberg
     """
     center_screen_y, center_screen_x = get_the_center_screen(window)
     prompt_array = prompt.splitlines()
