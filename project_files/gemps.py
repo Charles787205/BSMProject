@@ -12,9 +12,10 @@ class Gemps():
         self.green = curses.color_pair(1)
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
-        window.getch()
+        
         self.title = "GEMPS"
-        window.clear()
+        self.title_height = display_title(self.window, self.title)
+        self.starty = self.title_height + 4
         self.solve_gauss_jordan()
         
         
@@ -58,6 +59,7 @@ class Gemps():
 
     def solve_gauss_jordan(self):
         centery, centerx = get_the_center_screen(self.window)
+        self.matrix_width = self.draw_matrix(centerx, process=["Matrix"])
         first_matrix_startx = centerx - (self.matrix_width + 2)
         second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2 # dili + 4 para mas dali masabtan ang logic
         
@@ -139,7 +141,7 @@ class Gemps():
 
 
         for key in final_answer_values:
-            final_answer +=  f'xsub{key+1} = {str(".4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
+            final_answer +=  f'xsub{key+1} = {str("%.4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
 
         return final_answer
 

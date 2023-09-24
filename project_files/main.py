@@ -32,6 +32,7 @@ def start_curses(window):
     curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLACK)
     curses.init_pair(4, 227, curses.COLOR_BLACK)
     curses.init_pair(5, 91, 220) #https://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses the numbers are colors
+    curses.init_pair(6, 206, curses.COLOR_BLACK)
     print(display_title(window, title,font='big'))
     user_input = eval(get_problem_type(window))
     if user_input < 4: #all gauss methods need matrix

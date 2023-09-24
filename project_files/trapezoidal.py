@@ -34,7 +34,7 @@ class Trapezoidal():
         a = self.a.replace("pi", self.pi_chr)
         b = self.b.replace("pi", self.pi_chr)
         table_y = self.title_length + 6
-        display_string_center_screen(self.window, table_y, str(table).splitlines(), colored_row=[0,1,2], colored_row_color=self.header_color)
+        display_string_center_screen(self.window, table_y, str(table).splitlines(), color=self.yellow)
         display_answer(self.window, a,b, self.user_function,self.title_length, self.pink)
 
         table_length = len(str(table).splitlines())
@@ -43,14 +43,9 @@ class Trapezoidal():
         
     def prompt_to_romberg(self,y,y_length):
         continue_prompt = "Continue to romberg? press C"
-        continue_prompt_length = len(continue_prompt)
-        blanks =''
-        centery, centerx = get_the_center_screen(self.window)
-        for i in range(len(continue_prompt)):
-            blanks += " "
-
-
-        self.window.addstr(y + y_length + 2, centerx - len(continue_prompt), continue_prompt)
+        
+        display_string_center_screen(self.window, y + y_length + 2,[ continue_prompt], color=self.yellow)
+        
         
         key = chr(self.window.getch())
         if key == 'c' or key == 'C':
@@ -82,19 +77,19 @@ class Trapezoidal():
 
         prompt = """Enter the function below
         use 'x' as the variable"""
-        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.user_function = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.pink)
+        self.user_function = get_string_from_user(self.window,centerx,centery,self.title, color=self.yellow, title_color=self.yellow)
         self.function = self.user_function.replace("^", "**")
         
         self.clear_display_title()
         prompt = 'Enter the upper limit (the b variable)'
-        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.b = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.pink)
+        self.b = get_string_from_user(self.window,centerx,centery,self.title, color=self.yellow, title_color=self.yellow)
 
         self.clear_display_title()
         prompt = 'Enter the lower limit (the a variable)'
-        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.a = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.pink)
+        self.a = get_string_from_user(self.window,centerx,centery,self.title, color=self.yellow, title_color=self.yellow)
 
         
     def clear_display_title(self):

@@ -13,7 +13,6 @@ class Romberg():
         self.cyan = curses.color_pair(3)
         self.yellow = curses.color_pair(4)
         self.header_color = curses.color_pair(5)
-        curses.init_pair(6, 206, curses.COLOR_BLACK)
         self.pink = curses.color_pair(6)
         self.title = 'Romberg'
         self.pi_chr = u'\u03C0'
@@ -29,17 +28,17 @@ class Romberg():
         self.display_romberg(table)
 
     def solve_romberg_from_romberg(self):  #solve  romberg from romberg
+        self.window.clear()
         self.get_required_values()
         self.trapezoidal_table = solve_trapezoidal(self.a, self.b, self.function)
         table = self.solve_romberg()
         self.display_romberg(table) 
         
     def display_romberg(self,table):
-        self.window.clear()
-        self.title_length = display_title(self.window, self.title, color=self.pink)
-        display_string_center_screen(self.window, self.title_length + 6, str(table).splitlines())
+        self.title_length = self.clear_display_title()
+        display_string_center_screen(self.window, self.title_length + 6, str(table).splitlines(),color=self.pink)
         self.table_length = len(str(table).splitlines())
-        display_answer(self.window, self.a, self.b, self.user_function, self.title_length, color=self.cyan)
+        display_answer(self.window, self.a, self.b, self.user_function, self.title_length, color=self.yellow)
         self.window.getch()
     
     def solve_romberg(self) -> PrettyTable:
@@ -74,21 +73,21 @@ class Romberg():
         prompt = """Enter the function below
         use 'x' as the variable"""
         display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.user_function = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        self.user_function = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink,title_color=self.pink)
         self.function = self.user_function.replace("^", "**")
         
         self.clear_display_title()
         prompt = 'Enter the upper limit (the b variable)'
         display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.b = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        self.b = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink,title_color=self.pink)
 
         self.clear_display_title()
         prompt = 'Enter the lower limit (the a variable)'
         display_string_center_screen(self.window, self.title_length+4, prompt.splitlines(), color=self.yellow)
-        self.a = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink)
+        self.a = get_string_from_user(self.window,centerx,centery,self.title, color=self.pink,title_color=self.pink)
     
 
     def clear_display_title(self):
         self.window.clear()
-        display_title(self.window, self.title, color=self.pink)
+        return(display_title(self.window, self.title, color=self.pink))
 

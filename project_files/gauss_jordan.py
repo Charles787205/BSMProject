@@ -13,9 +13,11 @@ class GaussJordan():
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
         
-        window.getch()
+        
         self.title = "Gauss Jordan"
         window.clear()
+        self.title_height = display_title(self.window, self.title)
+        self.starty = self.title_height + 4
         self.solve_gauss_jordan()
         
         
@@ -59,6 +61,7 @@ class GaussJordan():
 
     def solve_gauss_jordan(self):
         centery, centerx = get_the_center_screen(self.window)
+        self.matrix_width = self.draw_matrix(centerx, process=["Matrix"])
         first_matrix_startx = centerx - (self.matrix_width + 2)
         second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2 # dili + 4 para mas dali masabtan ang logic
         
@@ -75,7 +78,7 @@ class GaussJordan():
             #First Phase interchange sa PIVOT
             self.window.clear() 
             display_title(self.window, self.title)
-            self.matrix_width =self.draw_matrix(first_matrix_startx, process=["Matrix"])
+            self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Matrix"])
             row_with_max, row_changed = self.interchange(row_ind )
             self.matrix_width =self.draw_matrix(second_matrix_startx, process=["Interchange"], colored_row={row_with_max:self.green, row_changed:self.red})
             self.window.getch()

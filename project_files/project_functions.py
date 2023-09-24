@@ -50,7 +50,7 @@ def display_string(window,y,x, string_arr, color=None, colored_row=[], colored_r
 
 
 
-def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int,title, color=None) -> str:
+def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int,title, color=None,title_color=None) -> str:
     """Get the string from user input"""
     cursor_x = cursor_start_x
     cursor_y = cursor_start_y
@@ -60,8 +60,10 @@ def get_string_from_user(window, cursor_start_x:int, cursor_start_y:int,title, c
     center_y, center_x = get_the_center_screen(window)
     maxy,maxx = window.getmaxyx()
     while(not is_entered):
-        
-        display_title(window, title)
+        if title_color is not None:
+            display_title(window, title, color=title_color)
+        else: 
+            display_title(window,title)
         if color != None:
             display_string(window, cursor_y, cursor_x, user_input.splitlines(),color=color)
         else:

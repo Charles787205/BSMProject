@@ -13,11 +13,13 @@ class Gaussian():
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
         
-        self.window.getch()
         self.title = "Gaussian"
 
+        self.title_height = display_title(self.window, self.title)
+        self.starty = self.title_height + 4
         self.solve_gauss()
         print(self.matrix)
+        
     
     
     
@@ -59,9 +61,9 @@ class Gaussian():
         return f"R{row+1} - (%.2gR{col+1})" % value_to_eliminate
     def solve_gauss(self):
         centery, centerx = get_the_center_screen(self.window)
+        self.matrix_width = self.draw_matrix(centerx, process=["Matrix"])
         first_matrix_startx = centerx - (self.matrix_width + 2)
         second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2 # dili + 4 para mas dali masabtan ang logic
-        
 
         self.title_height = display_title(self.window, self.title)
         self.starty = self.title_height + 4
@@ -136,7 +138,7 @@ class Gaussian():
 
 
         for key in final_answer_values:
-            final_answer += f'xsub{key+1} = {str(".4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
+            final_answer += f'xsub{key+1} = {str("%.4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
 
         return final_answer
 
