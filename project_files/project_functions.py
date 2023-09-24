@@ -3,6 +3,7 @@ import pyfiglet
 from typing import List
 matrix = []
 title = ''
+from math import *
 
 
 """This is the functions that is shared among the projects"""
@@ -96,3 +97,60 @@ def display_string_center_screen(window, y, string_arr, color=None, colored_row=
     string_x = centerx - int(length /2)
     display_string(window, y, string_x, string_arr, color=color,colored_row=colored_row, colored_row_color=colored_row_color)
 
+def solve_trapezoidal( a:str, b:str, function:str) -> list:
+    """Note a is the lower limit and b is the upper limit"""
+    """This function will be different than the rest
+    as this will be used also in romberg integration"""
+    integrals = []
+    panels = []
+    table = []
+    n = 1
+    formula = '((({b})-({a}))/(2*{n})) * ({f_xsuba} + {middle_function} + {f_xsubb})' 
+
+    isdone = False
+
+    while not isdone:
+        panels.append(n)
+        middle_function = '0'
+        f_xsubb = get_function_value(function, b)
+        f_xsuba = get_function_value(function, a)
+        for i in range(1,n):
+            multiply_sa_b =  i/n #nahutdan nakug ingalan
+            middle_value = get_function_value(function, f'{b} * {multiply_sa_b}')
+            middle_function += f"+ 2*({middle_value})"
+        all_function = formula.format(b=b, a=a,n=n, f_xsuba=f_xsuba, middle_function=middle_function, f_xsubb=f_xsubb)
+        integral = eval(all_function)
+        integrals.append(integral)
+        n*=2
+        if n > 2048:
+            isdone = True
+    
+    for i in range(len(panels)):
+        table.append([panels[i], integrals[i]])
+   
+    return table
+
+    
+
+def get_function_value(function:str, x):
+    
+    new_function = function.replace('x', str(x))
+    function_value = eval(new_function) 
+
+    return function_value
+
+    
+def display_answer(window, a,b , function, title_length, color):
+        """For romberg and trapezoidal method 2 lines under the title"""
+        center_y, center_x = get_the_center_screen(window)
+        prompt_answer = ["function   :","upper limit: ", "lower limit: "]
+        prompt_answer_length = 0
+        integ_chr = u'\u222b'
+
+        for i in prompt_answer:
+            if len(i) > prompt_answer_length:
+                prompt_answer_length = len(i)
+
+
+        display_string(window, title_length + 2, center_x - prompt_answer_length, prompt_answer)
+        display_string(window, title_length + 2, center_x, [f'{integ_chr}[{b},{a}] f(x) = {function}',b,a], color=color)
