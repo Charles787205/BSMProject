@@ -36,6 +36,7 @@ def start_curses(window):
     curses.init_pair(5, 18, 208) #blue , orange #https://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses the numbers are colors
     curses.init_pair(6, 206, curses.COLOR_BLACK) #pink
     curses.init_pair(7,182,curses.COLOR_BLACK) #blue
+    
 #print()
     userContinue = True
     
