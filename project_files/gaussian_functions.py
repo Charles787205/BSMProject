@@ -35,14 +35,14 @@ def get_matrix_from_user(window,title, color=None):
     while(not is_next_row):
         window.clear()
         input_arr = user_input.splitlines()
-        display_title(window, title=title)
-        display_string(window, prompt_y, prompt_x, prompt_array)
+        display_title(window, title=title,color=color)
+        display_string(window, prompt_y, prompt_x, prompt_array,color=curses.color_pair(3))
         if matrix_made:
             string_matrix_arr = string_matrix.splitlines()
             
             matrixx = center_screen_x - int(len(string_matrix_arr[0])/2)
             matrixy = prompt_y+prompt_y_length+2
-            display_string(window, matrixy, matrixx, string_matrix_arr)
+            display_string(window, matrixy, matrixx, string_matrix_arr,color=color)
             
             window.move(matrixy+(row_to_add), matrixx+(gap + col_to_add * len(matrix[0]))+2)
             key = window.getch()
@@ -69,7 +69,7 @@ def get_matrix_from_user(window,title, color=None):
                 input_x = input_start_x
             else:
                 input_x =  input_start_x if len(input_arr[-1]) == 0 else center_screen_x - int(len(input_arr[-1])/2)
-            display_string(window, prompt_y+prompt_y_length+2,input_x, input_arr) #display the user_input
+            display_string(window, prompt_y+prompt_y_length+2,input_x, input_arr,color=color) #display the user_input
             
             
             window.move(prompt_y+prompt_y_length+1 + len(input_arr), center_screen_x+int(len(user_input)/2)+1) #move cursor

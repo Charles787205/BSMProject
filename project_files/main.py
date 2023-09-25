@@ -33,7 +33,7 @@ def start_curses(window):
     curses.init_pair(2, 197, curses.COLOR_BLACK) #red
     curses.init_pair(3, 123, curses.COLOR_BLACK) #cyan
     curses.init_pair(4, 227, curses.COLOR_BLACK) #yellow
-    curses.init_pair(5, 220, 18) #dark violet , ligh violet #https://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses the numbers are colors
+    curses.init_pair(5, 18, 208) #blue , orange #https://stackoverflow.com/questions/18551558/how-to-use-terminal-color-palette-with-curses the numbers are colors
     curses.init_pair(6, 206, curses.COLOR_BLACK) #pink
     curses.init_pair(7,182,curses.COLOR_BLACK) #blue
 #print()
@@ -41,7 +41,7 @@ def start_curses(window):
     
     while userContinue:
         window.clear()
-        display_title(window, title,font='big')
+        display_title(window, title,font='big',color=curses.color_pair(2))
         user_input = get_problem_type(window)
         try:
             user_input = eval(user_input)
@@ -55,7 +55,7 @@ def start_curses(window):
             elif user_input == 3:
                 title = 'GEMPS'
             
-            matrix = gaussian_functions.get_matrix_from_user(window, title,color=curses.color_pair(1))
+            matrix = gaussian_functions.get_matrix_from_user(window, title,color=curses.color_pair(2))
             for row_ind, row in enumerate(matrix): #convert to numbers
                 for col_ind, col in enumerate(matrix[row_ind]):
                     matrix[row_ind][col_ind] = eval(col)
@@ -106,7 +106,7 @@ def get_problem_type(window): #gauss ba gauss jordan etc
     curses.curs_set(0)
     while not user_selected:
         color = curses.color_pair(5)
-        display_string_center_screen(window, prompt_y, prompt_array,colored_row=[selected_row], colored_row_color=curses.color_pair(5))
+        display_string_center_screen(window, prompt_y, prompt_array,colored_row=[selected_row],color=curses.color_pair(3), colored_row_color=curses.color_pair(5))
         user_input = window.getch()
         if user_input == curses.KEY_UP:
             selected_row -= 1

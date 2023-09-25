@@ -116,9 +116,10 @@ class Gemps():
                 self.window.getch()
             
         final_answer = self.solve_for_final_answer().splitlines()
-        final_answer.reverse()
+        
         y,x = get_the_center_screen(self.window)
-        display_string(self.window,y ,x-7 , final_answer , color=self.cyan)
+        display_string_center_screen(self.window, y-1, ['Backward Substitution'], self.red)
+        display_string_center_screen(self.window,y+1, final_answer, color=self.cyan)
         self.window.getch()
 
 
@@ -131,23 +132,28 @@ class Gemps():
         prev_row_value = None
         prev_answer = ''
         final_answer_values = {}
+        final_answer_string_values = {}
         for row_ind in range(len(self.matrix)-1, -1, -1):
             if(row_ind == len(self.matrix)-1): #xsub[last row] = matrix[lastrow][lastcolumn]
                 prev_row_value = self.matrix[row_ind][len(self.matrix[row_ind])-1]
                 final_answer_values[row_ind] = prev_row_value
+                final_answer_string_values[row_ind] = '%.4f' % prev_row_value
             else:
                 all_col_values = 0
                 for col_ind in range(len(self.matrix[row_ind])-1, row_ind, -1):
                     if col_ind != len(self.matrix[row_ind])-1 and col_ind > row_ind:
                         col_val = self.matrix[row_ind][col_ind]
                         all_col_values += col_val * final_answer_values[col_ind]
-                
+                        if row_ind in final_answer_string_values:
+                            final_answer_string_values[row_ind] += ' + ({:.2g} * {xsub})'.format(col_val, xsub=f'xsub{col_ind+1}')
+                        else:
+                            final_answer_string_values[row_ind] = '({:.2g} * {xsub})'.format(col_val, xsub=f'xsub{col_ind+1}')
                 final_answer_values[row_ind] = self.matrix[row_ind][-1] - all_col_values
-
+                final_answer_string_values[row_ind] = f'{"%.4g" % self.matrix[row_ind][-1]} - {final_answer_string_values[row_ind]}'
 
         for key in final_answer_values:
-            final_answer +=  f'xsub{key+1} = {str("%.4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
-
+            final_answer += f'xsub{key+1} = {final_answer_string_values[key]} =  {str("%.4f" % final_answer_values[key]).rstrip("0").rstrip(".")}\n'
+       
         return final_answer
 
 
