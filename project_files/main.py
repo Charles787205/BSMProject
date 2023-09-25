@@ -44,19 +44,16 @@ def start_curses(window):
         window.clear()
         display_title(window, title,font='big',color=curses.color_pair(2))
         user_input = get_problem_type(window)
-        try:
-            user_input = eval(user_input)
-        except:
-            pass
+        
         
         if user_input < 4: #all gauss methods need matrix
             title_input = "Gaussian"
             if user_input == 2:
                 title_input = 'GaussJordan'
             elif user_input == 3:
-                title = 'GEMPS'
+                title_input = 'GEMPS'
             
-            matrix = gaussian_functions.get_matrix_from_user(window, title,color=curses.color_pair(2))
+            matrix = gaussian_functions.get_matrix_from_user(window, title_input,color=curses.color_pair(2))
             for row_ind, row in enumerate(matrix): #convert to numbers
                 for col_ind, col in enumerate(matrix[row_ind]):
                     matrix[row_ind][col_ind] = eval(col)

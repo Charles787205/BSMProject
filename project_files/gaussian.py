@@ -15,7 +15,7 @@ class Gaussian():
         
         self.title = "Gaussian"
 
-        self.title_height = display_title(self.window, self.title)
+        self.title_height = self.display_title()
         self.starty = self.title_height + 4
         self.solve_gauss()
         
@@ -65,7 +65,7 @@ class Gaussian():
         first_matrix_startx = centerx - (self.matrix_width + 2)
         second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2 # dili + 4 para mas dali masabtan ang logic
 
-        self.title_height = display_title(self.window, self.title)
+        self.title_height = self.display_title()
         self.starty = self.title_height + 4
 
         #Ipakita sa ang starting matrix
@@ -76,7 +76,7 @@ class Gaussian():
             
             #First Phase interchange sa PIVOT
             #self.window.clear() 
-            #display_title(self.window, self.title)
+            #self.display_title()
             self.matrix_width =self.draw_matrix(first_matrix_startx, process=["Matrix"])
             #row_with_max, row_changed = self.interchange(row_ind )
             #self.matrix_width =self.draw_matrix(second_matrix_startx, process=["Interchange"], colored_row={row_with_max:self.green, row_changed:self.red})
@@ -84,7 +84,7 @@ class Gaussian():
 
             #Normalization
             self.window.clear()
-            display_title(self.window, self.title)
+            self.display_title()
             self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Interchanged Matrix"])
             col, process = self.normalize(row_ind)
             self.matrix_width = self.draw_matrix(second_matrix_startx,
@@ -103,7 +103,7 @@ class Gaussian():
                 first_matrix_startx = centerx - (self.matrix_width + 2) - 5
                 second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2
                 self.window.clear()
-                display_title(self.window, self.title)
+                self.display_title()
                 self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Past Matrix"]) #Display and daan na matrix
                 process = self.eliminate(row_ind, col_ind)                                         #I eliminate
                 self.matrix_width = self.draw_matrix(second_matrix_startx,                         #Display ang bag.o side by side
@@ -154,3 +154,6 @@ class Gaussian():
     
     def draw_matrix(self, startx, process=[], colored_row={}):
         return draw_matrix(self.window, self.matrix, startx=startx, starty=self.starty, colored_row=colored_row, process=process)
+
+    def display_title(self):
+        return display_title(self.window, self.title, color=self.cyan)
