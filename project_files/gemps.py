@@ -78,7 +78,12 @@ class Gemps():
             display_title(self.window, self.title)
             self.matrix_width =self.draw_matrix(first_matrix_startx, process=["Matrix"])
             row_with_max, row_changed = self.interchange(row_ind )
-            self.matrix_width =self.draw_matrix(second_matrix_startx, process=["Interchange"], colored_row={row_with_max:self.green, row_changed:self.red})
+            interchange_process = ["Interchange"]
+            if row_changed == -1:
+                interchange_process.append('Not necessary')
+            else:
+                interchange_process.append(f'R{row_changed+1} -> R{row_with_max+1}')
+            self.matrix_width =self.draw_matrix(second_matrix_startx, process=interchange_process, colored_row={row_with_max:self.green, row_changed:self.red})
             self.window.getch()
 
             #Normalization

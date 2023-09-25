@@ -6,8 +6,9 @@ from project_functions import *
 
 """This is the functions that is shared among the gaussian methods"""
 
-def get_matrix_from_user(window,title):
-    display_title(window, title=title)
+def get_matrix_from_user(window,title, color=None):
+    
+    display_title(window, title=title,color=color)
     prompt = """Enter the matrix below, note that the number of columns in 
     the first row will determine the number of rows. 
     Press spacebar for new column and enter for next row"""
@@ -177,14 +178,17 @@ def draw_matrix(window, matrix, startx, starty, colored_row = {}, process=[]):
     starty += 4 #ang two kay gap gikan sa process title to matrix
     for row_ind, row in enumerate(matrix):
         for ind, col in enumerate(matrix[row_ind]):
-            if len('{:.2g}'.format(col)) > gap:
-                gap = len('{:.2g}'.format(col))
+            length = len('{:.4g}'.format(col).rstrip('0').rstrip('.'))
+            if length > gap:
+                gap = length
     for row_ind, row in enumerate(matrix):
         string_matrix = '|'
         for col_ind, col in enumerate(row):
-            formatted_col = '{:.2g}'.format(col)
+            formatted_col = '{:.4g}'.format(col)
+            if formatted_col == '-0':
+                formatted_col = '0'
             if(col_ind == len(row)-1):
-                string_matrix += " :{:<{width}} ".format(formatted_col, width=gap )
+                string_matrix += " :{:<{width}} ".format(formatted_col, width=gap)
             else:
                 string_matrix += " {:<{width}} ".format(formatted_col, width=gap)
         string_matrix += '|'

@@ -12,7 +12,7 @@ class GaussJordan():
         self.green = curses.color_pair(1)
         self.red = curses.color_pair(2)
         self.cyan = curses.color_pair(3)
-        
+        self.blue = curses.color_pair(7)
         
         self.title = "Gauss Jordan"
         window.clear()
@@ -26,16 +26,18 @@ class GaussJordan():
         
         max_value = abs(self.matrix[col_num][col_num])#assign sa pina ka una sa
         row_with_max_value = col_num
-        for index in range(col_num, len(self.matrix)):
-            value = abs(self.matrix[index][col_num])
-            if value > max_value:   
-                max_value = value
-                row_with_max_value = index
-        arr1 = self.matrix[col_num] #col_num naa diri kay same ra dapat sa row_num
-        arr2 = self.matrix[row_with_max_value]
+        if self.matrix[col_num][col_num] != 1:
+            for index in range(col_num, len(self.matrix)):
+                value = abs(self.matrix[index][col_num])
+                if value > max_value:   
+                    max_value = value
+                    row_with_max_value = index
+            arr1 = self.matrix[col_num] #col_num naa diri kay same ra dapat sa row_num
+            arr2 = self.matrix[row_with_max_value]
 
-        self.matrix[col_num] = arr2
-        self.matrix[row_with_max_value] = arr1 #diri na na change
+            self.matrix[col_num] = arr2
+            self.matrix[row_with_max_value] = arr1 #diri na na change
+        
         return [col_num,row_with_max_value] if col_num != row_with_max_value else [col_num,-1]
         
     def normalize(self, col): #since same ra ang col ug row nga i normalize
@@ -77,15 +79,20 @@ class GaussJordan():
             
             #First Phase interchange sa PIVOT
             self.window.clear() 
-            display_title(self.window, self.title)
+            display_title(self.window, self.title,color=self.green)
             self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Matrix"])
             row_with_max, row_changed = self.interchange(row_ind )
-            self.matrix_width =self.draw_matrix(second_matrix_startx, process=["Interchange"], colored_row={row_with_max:self.green, row_changed:self.red})
+            interchange_process = ["Interchange"]
+            if row_changed == -1:
+                interchange_process.append('Not necessary')
+            else:
+                interchange_process.append(f'R{row_changed+1} -> R{row_with_max+1}')
+            self.matrix_width =self.draw_matrix(second_matrix_startx, process=interchange_process, colored_row={row_with_max:self.green, row_changed:self.red})
             self.window.getch()
 
             #Normalization
             self.window.clear()
-            display_title(self.window, self.title)
+            display_title(self.window, self.title,color=self.green)
             self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Interchanged Matrix"])
             col, process = self.normalize(row_ind)
             self.matrix_width = self.draw_matrix(second_matrix_startx,
@@ -104,7 +111,7 @@ class GaussJordan():
                 first_matrix_startx = centerx - (self.matrix_width + 2) - 5
                 second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2
                 self.window.clear()
-                display_title(self.window, self.title)
+                display_title(self.window, self.title,color=self.green)
                 self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Past Matrix"]) #Display and daan na matrix
                 process = self.eliminate(row_ind, col_ind)                                         #I eliminate
                 self.matrix_width = self.draw_matrix(second_matrix_startx,                         #Display ang bag.o side by side
@@ -116,7 +123,7 @@ class GaussJordan():
                     first_matrix_startx = centerx - (self.matrix_width + 2) - 5
                     second_matrix_startx = first_matrix_startx + (self.matrix_width+2) + 2
                     self.window.clear()
-                    display_title(self.window, self.title)                                
+                    display_title(self.window, self.title,color=self.green)                                
                     self.matrix_width = self.draw_matrix(first_matrix_startx, process=["Past Matrix"]) #Same ra sa taas
                     process = self.eliminate(row_ind, col_ind)
                     self.matrix_width = self.draw_matrix(colored_row={col_ind: self.green},
